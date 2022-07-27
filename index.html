@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <script src="./dest/index.js" defer></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="task-list">
+            <div class="task-create">
+                <h1>MY Task list</h1>
+                <form>
+                    <label>Title</label>
+                    <input type="text" id="task-title"> <br>
+
+                    <label>Description</label>
+                    <textarea id="task-description" cols="30" rows="10"></textarea> <br>
+
+                    <label>Date</label>
+                    <input type="date" id="task-date"> <br>
+
+                    <button type='submit' id="addTodo">Add</button>
+                </form>
+            </div>
+
+            <div class="all-task">
+                
+                <h1 id="all-task">All task</h1>
+            </div>
+            <div class="completed-task">
+                <h1>Completed Task</h1>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

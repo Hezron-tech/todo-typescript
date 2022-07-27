@@ -11,5 +11,42 @@
 
 .task-create{
     text-align: center;
+    justify-content: center;
    
+}
+#all-task{
+    padding: 10px;
+    text-align: center;
+}
+
+input{
+    border-radius: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+form{
+    padding: 20px;
+}
+
+label{
+    font-size: 30px;
+    font-weight: bold;
+   
+    padding-bottom: 20px;
+}
+
+.date{
+    margin-top: 20px;
+}
+textarea{
+    border-radius: 20px;
+    padding: 20px; 
+    margin-bottom: 20px;
+}
+#updateBtn{
+    background-color: aqua;
+    width: 100px;
+    padding: 10px;
+    border-radius: 20px;
 }

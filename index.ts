@@ -1,174 +1,151 @@
-const incomplete = document.getElementById('all-task') as HTMLElement
-const titleInput = document.getElementById('task-title') as HTMLInputElement
-const descriptionInput = document.getElementById('task-description') as HTMLInputElement
-const dateInput = document.getElementById('task-date') as HTMLInputElement
-const submit =document.getElementById('addTodo') as HTMLButtonElement
+const incomplete = document.getElementById("all-task") as HTMLElement;
+const titleInput = document.getElementById("task-title") as HTMLInputElement;
+const descriptionInput = document.getElementById(
+  "task-description"
+) as HTMLInputElement;
+const dateInput = document.getElementById("task-date") as HTMLInputElement;
+const submit = document.getElementById("addTodo") as HTMLButtonElement;
+const updateBtn = document.getElementById("updateBtn") as HTMLButtonElement;
 
-
-interface Todos{
-    title: string,
-    description: string,
-    date: string,
-    // completed:boolean
-    
+interface Todos {
+  title: string;
+  description: string;
+  date: string;
 }
 
-class AllTodo{
-    private todoArr:Todos[]=[];
-    
-    constructor(){
-        this.display()
+class AllTodo {
+  private todoArr: Todos[] = [];
 
-    }
+  constructor() {
+    this.display();
+  }
 
-    AddTodo(TodoItem:Todos){
-        
-        this.todoArr.push(TodoItem)
-    }
+  AddTodo(TodoItem: Todos) {
+    this.todoArr.push(TodoItem);
+  }
 
-    GetAllTodo(){
-        return this.todoArr
-    }
-    display(){
+  GetAllTodo() {
+    return this.todoArr;
+  }
+  getTaskById(id: number) {
+    return this.todoArr.find((task: any) => task.id === id);
+  }
 
-        let incompleted = document.querySelector(".all-task") as HTMLDivElement;
-        incompleted.innerHTML = "<h1>All tasks</h1>";
-      
-        // let title,desc,duedate,diff=''
-          this.GetAllTodo().map( (task:any, index:any)=>{
+  display() {
+    let incompleted = document.querySelector(".all-task") as HTMLDivElement;
+    incompleted.innerHTML = "<h1>All tasks</h1>";
 
-          const maindiv = document.createElement("div");
-         
-          const h2 = document.createElement("h2");
-          const h4 = document.createElement("h4");
-          const p = document.createElement("p");
-          
-          const button = document.createElement("button");
-          const buttonEdit= document.createElement("buttonEdit");
-          buttonEdit.innerHTML="edit";
-          buttonEdit.id="button-edit";
-          button.innerHTML = "delete";
-          button.id="button-delete";
+    // let title,desc,duedate,diff=''
+    this.GetAllTodo().map((task: any, index: any) => {
+      const maindiv = document.createElement("div");
 
-          const edit= document.getElementById('button-edit') as HTMLButtonElement
-          buttonEdit.addEventListener('click',()=>{
+      maindiv.style.padding = "20px";
 
+      const h2 = document.createElement("h2");
+      h2.style.padding = "10px";
+      const h4 = document.createElement("h4");
+      const p = document.createElement("p");
 
+      const button = document.createElement("button");
+      button.style.color = "white";
+      button.style.backgroundColor = "red";
+      button.style.padding = "15px";
+      button.style.borderRadius = "20px";
+      button.style.marginRight = "5px";
 
-          })
-          const del=document.getElementById('button-delete') as HTMLButtonElement
-           button.addEventListener('click', ()=>{
-            this.deleteTodo(index)
-           }
-            
-           
-          
+      const edit = document.createElement("button");
+      const completed = document.createElement("button");
 
-            // removeTodo()l
-           ); 
+      button.innerHTML = "delete";
+      button.id = "button-delete";
 
-          h2.textContent = `${task.title}`;
-          h4.textContent = `${task.description}`;
-          p.textContent=`${task.date}`
-         
-         
-          
-          maindiv.appendChild(h2);
-          maindiv.appendChild(h4);
-          maindiv.appendChild(p);
-          
-          maindiv.appendChild(button);
-          maindiv.appendChild(buttonEdit);
-        
-          incompleted.appendChild(maindiv);
-        });
-      
+      edit.innerHTML = "Edit";
+      edit.id = "button-edit";
+      edit.style.padding = "15px";
+      edit.style.borderRadius = "20px";
+      edit.style.marginRight = "5px";
 
-    }
+      completed.innerHTML = "completed";
+      completed.id = "btn-completed";
+      completed.style.padding = "15px";
+      completed.style.borderRadius = "20px";
+      completed.style.marginRight = "5px";
 
-    
-    deleteTodo(id:number){
-        
-         this.todoArr.splice(id,1)
-         this.display()
-        console.log('heloo');
-        
-    }
+      edit.addEventListener("click", () => {
+        const addTodo = document.getElementById("addTodo") as HTMLButtonElement;
+        addTodo.style.display = "none";
 
+        updateBtn.style.display = "inline";
+        updateBtn.setAttribute("data-id", index);
+        updateTodo(index);
+      });
 
+      completed.addEventListener("click", () => {
+        console.log(index);
+      });
+
+      const del = document.getElementById("button-delete") as HTMLButtonElement;
+      button.addEventListener("click", () => {
+        this.deleteTodo(index);
+      });
+
+      h2.textContent = `${task.title}`;
+      h4.textContent = `${task.description}`;
+      p.textContent = `${task.date}`;
+
+      maindiv.appendChild(h2);
+      maindiv.appendChild(h4);
+      maindiv.appendChild(p);
+      maindiv.appendChild(button);
+      maindiv.appendChild(edit);
+      maindiv.appendChild(completed);
+      incompleted.appendChild(maindiv);
+    });
+  }
+
+  deleteTodo(id: number) {
+    this.todoArr.splice(id, 1);
+    this.display();
+  }
+
+  updateTodo(index: number, todo: Todos) {
+    this.todoArr.splice(index, 1, todo);
+    this.display();
+  }
 }
 
+const task = new AllTodo();
+submit.addEventListener("click", (e) => {
+  e.preventDefault();
 
-const task =new AllTodo()
+  const title = titleInput.value;
+  const description = descriptionInput.value;
+  const date = dateInput.value;
+  titleInput.value = "";
+  descriptionInput.value = "";
+  dateInput.value = "";
+  task.AddTodo({ title, description, date });
+  task.display();
+});
 
+const updateTodo = (id: number) => {
+  const taskTodo = task.GetAllTodo()[id];
 
-submit.addEventListener('click', (e)=>{
-    e.preventDefault()
-    const title = titleInput.value
-    const description = descriptionInput.value
-    const date = dateInput.value
+  titleInput.value = taskTodo.title;
+  descriptionInput.value = taskTodo.description;
+  dateInput.value = taskTodo.date;
+};
+const handleUpdate = (target: HTMLElement) => {
+  let id = target.getAttribute("data-id");
+  if (id) {
+    const index = parseInt(id);
+
+    const title = titleInput.value;
+    const description = descriptionInput.value;
+    const date = dateInput.value;
     titleInput.value = "";
-    descriptionInput .value = "";
-    dateInput .value = "";
-    task.AddTodo({title,description,date,}) 
-    task.display()
-  });
-
-
-    // function displayTasks() {
-    //     let incompleted = document.querySelector(".all-task") as HTMLDivElement;
-    //     incompleted.innerHTML = "<h1>All tasks</h1>";
-      
-    //     // let title,desc,duedate,diff=''
-    //       task.GetAllTodo().map( (task:any, index:any)=>{
-
-    //       const maindiv = document.createElement("div");
-         
-    //       const h2 = document.createElement("h2");
-    //       const h4 = document.createElement("h4");
-    //       const p = document.createElement("p");
-          
-    //       const button = document.createElement("button");
-    //       button.innerHTML = "delete";
-    //       button.id="button-delete";
-    //       const del=document.getElementById('button-delete') as HTMLButtonElement
-    //        button.addEventListener('click', ()=>{
-    //         task.deleteTodo(index)
-    //        }
-            
-           
-          
-
-            // removeTodo()l
-        //    ); 
-
-    //       h2.textContent = `${task.title}`;
-    //       h4.textContent = `${task.description}`;
-    //       p.textContent=`${task.date}`
-         
-         
-          
-    //       maindiv.appendChild(h2);
-    //       maindiv.appendChild(h4);
-    //       maindiv.appendChild(p);
-    //       maindiv.appendChild(button);
-        
-    //       incompleted.appendChild(maindiv);
-    //     });
-    //   }
-      
-    // function removeTodo(){
-    //     task.deleteTodo(1)
-    //     displayTasks()
-    // }  
-
- 
-    // let completed = document.querySelector("#all-task") as HTMLDivElement;
-
-  
-
-
-
-
-
-
+    descriptionInput.value = "";
+    dateInput.value = "";
+    task.updateTodo(index, { title, description, date });
+  }
+};

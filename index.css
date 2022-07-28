@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    background-color: bisque;
 }
 
 .task-list{
@@ -49,4 +50,10 @@ textarea{
     width: 100px;
     padding: 10px;
     border-radius: 20px;
+}
+#addTodo{
+    background-color: aqua;
+    width: 100px;
+    padding: 10px;
+    border-radius: 20px;   
 }

@@ -10,6 +10,7 @@ interface Todos {
   title: string;
   description: string;
   date: string;
+  
 }
 
 class AllTodo {
@@ -161,6 +162,8 @@ const handleUpdate = (target: HTMLElement) => {
 
 
 
+
+
 class Complete extends AllTodo {
   public completedTasks:Todos[] = [];
   constructor(){
@@ -175,6 +178,7 @@ class Complete extends AllTodo {
     return this.completedTasks
   }
 
+  
   
 }
 
